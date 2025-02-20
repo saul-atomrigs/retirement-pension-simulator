@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import CTAButton from '../components/CTAButton';
 import Loading from '../components/Loading';
 import Txt from '../components/Txt';
@@ -9,6 +10,8 @@ export default function PensionsPage() {
   const { user, userLoading } = useUser();
   const { pensions, pensionsLoading } = usePensions();
 
+  const [selectedPensionId, setSelectedPensionId] = useState('');
+
   if (userLoading) return <Loading message='사용자 데이터 불러오는중' />;
   if (pensionsLoading) return <Loading message='연금 상품 불러오는중' />;
 
@@ -18,9 +21,18 @@ export default function PensionsPage() {
         {user?.firstName}님의 연금 상품을 골라주세요
       </Txt>
 
-      <PensionsList pensions={pensions} />
+      <PensionsList
+        pensions={pensions}
+        selectedPensionId={selectedPensionId}
+        onSelect={setSelectedPensionId}
+      />
 
-      <CTAButton onClick={() => console.log('선택 완료')}>선택 완료</CTAButton>
+      <CTAButton
+        onClick={() => console.log('선택 완료')}
+        disabled={!selectedPensionId}
+      >
+        선택 완료
+      </CTAButton>
     </div>
   );
 }
