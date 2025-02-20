@@ -1,18 +1,18 @@
-import { StrictMode } from "react";
-import ReactDOM from "react-dom/client";
+import { StrictMode } from 'react';
+import ReactDOM from 'react-dom/client';
 import {
   Outlet,
   RouterProvider,
   createRootRoute,
   createRoute,
   createRouter,
-} from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+} from '@tanstack/react-router';
+import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
-import "./styles.css";
-import reportWebVitals from "./reportWebVitals.ts";
+import './styles.css';
+import reportWebVitals from './reportWebVitals.ts';
 
-import App from "./App.tsx";
+import App from './App.tsx';
 
 const rootRoute = createRootRoute({
   component: () => (
@@ -25,25 +25,41 @@ const rootRoute = createRootRoute({
 
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/",
+  path: '/',
   component: App,
 });
 
-const routeTree = rootRoute.addChildren([indexRoute]);
+const simulationRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/simulation',
+  component: () => <div>Simulation</div>,
+});
+
+const pensionsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/pensions',
+  component: () => <div>Pensions</div>,
+});
+
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  simulationRoute,
+  pensionsRoute,
+]);
 
 const router = createRouter({
   routeTree,
-  defaultPreload: "intent",
+  defaultPreload: 'intent',
   scrollRestoration: true,
 });
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router;
   }
 }
 
-const rootElement = document.getElementById("app")!;
+const rootElement = document.getElementById('app')!;
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
