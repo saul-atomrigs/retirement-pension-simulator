@@ -13,7 +13,5 @@ code {
 }
 
 .container {
-  display: flex;
-  height: 100vh;
   padding: 2rem;
 }
