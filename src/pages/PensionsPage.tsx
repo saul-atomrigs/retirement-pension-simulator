@@ -1,3 +1,4 @@
+import CTAButton from '../components/CTAButton';
 import Loading from '../components/Loading';
 import Txt from '../components/Txt';
 import usePensions from '../features/pensions/Pensions.hooks';
@@ -18,6 +19,8 @@ export default function PensionsPage() {
       </Txt>
 
       <PensionsList pensions={pensions} />
+
+      <CTAButton onClick={() => console.log('선택 완료')}>선택 완료</CTAButton>
     </div>
   );
 }
