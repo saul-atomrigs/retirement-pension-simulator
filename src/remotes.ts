@@ -31,3 +31,33 @@ export const getPensionsAPI = async (): Promise<Pension[]> => {
   }
   return response.json();
 };
+
+export interface SimulationRequest {
+  age: number;
+  retirementAge: number;
+  monthlyInvestment: number;
+}
+
+export interface SimulationResponse {
+  totalYears: number;
+  finalAmount: number;
+  expectedReturnRate: number;
+}
+
+export const simulatePensionAPI = async (
+  data: SimulationRequest
+): Promise<SimulationResponse> => {
+  const response = await fetch('/simulation', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to simulate pension');
+  }
+
+  return response.json();
+};
