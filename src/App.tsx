@@ -1,36 +1,26 @@
-import logo from "./logo.svg";
-import "./App.css";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useUser } from './features/user/user.hook';
+import { initMockAPI } from './mocks';
+import './App.css';
 
+const queryClient = new QueryClient();
+
+function AppContent() {
+  const { data: user, isLoading, error } = useUser();
+
+  console.log({ user, isLoading, error });
+
+  return <div className='App'></div>;
+}
 
 function App() {
+  initMockAPI();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <a
-          className="App-link"
-          href="https://tanstack.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn TanStack
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <AppContent />
+    </QueryClientProvider>
   );
 }
 
-
 export default App;
-
