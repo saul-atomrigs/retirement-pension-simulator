@@ -13,6 +13,7 @@ import './styles.css';
 import reportWebVitals from './reportWebVitals.ts';
 
 import App from './App.tsx';
+import PensionsPage from './pages/PensionsPage.tsx';
 
 const rootRoute = createRootRoute({
   component: () => (
@@ -32,13 +33,13 @@ const indexRoute = createRoute({
 const simulationRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/simulation',
-  component: () => <div>Simulation</div>,
+  component: () => <div>Simulations</div>,
 });
 
 const pensionsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/pensions',
-  component: () => <div>Pensions</div>,
+  component: () => <PensionsPage />,
 });
 
 const routeTree = rootRoute.addChildren([
