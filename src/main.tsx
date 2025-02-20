@@ -14,13 +14,18 @@ import reportWebVitals from './reportWebVitals.ts';
 
 import App from './App.tsx';
 import PensionsPage from './pages/PensionsPage.tsx';
+import { initMockAPI } from './mocks/index.ts';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+initMockAPI();
+
+const queryClient = new QueryClient();
 const rootRoute = createRootRoute({
   component: () => (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Outlet />
       <TanStackRouterDevtools />
-    </>
+    </QueryClientProvider>
   ),
 });
 

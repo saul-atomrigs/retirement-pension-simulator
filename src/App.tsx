@@ -1,6 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useUser } from './features/user/user.hook';
-import { initMockAPI } from './mocks';
 import './App.css';
 
 const queryClient = new QueryClient();
@@ -14,8 +13,6 @@ function AppContent() {
 }
 
 function App() {
-  initMockAPI();
-
   return (
     <QueryClientProvider client={queryClient}>
       <AppContent />
