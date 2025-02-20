@@ -1,15 +1,23 @@
-import CTAButton from '../components/CTAButton';
 import { useNavigate } from '@tanstack/react-router';
-import Txt from '../components/Txt';
-import TextInput from '../components/TextInput';
 import { useState } from 'react';
+import CTAButton from '../components/CTAButton';
+import TextInput from '../components/TextInput';
+import Txt from '../components/Txt';
 
 export default function MonthlyInvestAmountInputPage() {
   const navigate = useNavigate();
-  const [monthlyAmount, setMonthlyAmount] = useState('');
+
+  const initialMonthlyAmount = sessionStorage.getItem('monthlyAmount') || '';
+  const [monthlyAmount, setMonthlyAmount] = useState(initialMonthlyAmount);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMonthlyAmount(e.target.value);
+    const inputValue = e.target.value;
+    setMonthlyAmount(inputValue);
+    sessionStorage.setItem('monthlyAmount', inputValue);
+  };
+
+  const handleClickConfirm = () => {
+    navigate({ to: '/pensions', search: { monthlyAmount } });
   };
 
   return (
@@ -25,7 +33,7 @@ export default function MonthlyInvestAmountInputPage() {
         onChange={handleChange}
       />
 
-      <CTAButton onClick={() => navigate({ to: '/pensions' })}>
+      <CTAButton onClick={handleClickConfirm} disabled={!monthlyAmount}>
         연금 고르기
       </CTAButton>
     </div>

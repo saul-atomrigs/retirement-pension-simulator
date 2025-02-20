@@ -5,8 +5,10 @@ import usePensions from '../features/pensions/Pensions.hooks';
 import PensionsList from '../features/pensions/PensionsList';
 import { useUser } from '../features/user/user.hook';
 import { useSimulation } from '../features/simulation/Simulation.hooks';
+import { useSearch } from '@tanstack/react-router';
 
 export default function PensionsPage() {
+  const { monthlyAmount } = useSearch({ strict: false });
   const { user, userLoading } = useUser();
   const { pensions, pensionsLoading } = usePensions();
   const {
@@ -23,7 +25,7 @@ export default function PensionsPage() {
   return (
     <div className='container'>
       <Txt weight='bold' size='2xl' style={{ marginBottom: '2rem' }}>
-        {user?.firstName}님의 연금 상품을 골라주세요
+        매월 {monthlyAmount}원으로 {user?.firstName}님의 연금 상품을 골라주세요
       </Txt>
 
       <PensionsList
