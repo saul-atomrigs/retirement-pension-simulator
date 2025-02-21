@@ -13,13 +13,21 @@ import './styles.css';
 import reportWebVitals from './reportWebVitals.ts';
 
 import App from './App.tsx';
+import PensionsPage from './pages/PensionsPage.tsx';
+import { initMockAPI } from './mocks/index.ts';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import MonthlyInvestAmountInputPage from './pages/MonthlyInvestAmountInputPage.tsx';
+import ResultsPage from './pages/ResultsPage.tsx';
 
+initMockAPI();
+
+const queryClient = new QueryClient();
 const rootRoute = createRootRoute({
   component: () => (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Outlet />
       <TanStackRouterDevtools />
-    </>
+    </QueryClientProvider>
   ),
 });
 
@@ -29,22 +37,36 @@ const indexRoute = createRoute({
   component: App,
 });
 
+const monthlyInvestAmountInputRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/monthly-invest-amount-input',
+  component: () => <MonthlyInvestAmountInputPage />,
+});
+
 const simulationRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/simulation',
-  component: () => <div>Simulation</div>,
+  component: () => <div>Simulations</div>,
 });
 
 const pensionsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/pensions',
-  component: () => <div>Pensions</div>,
+  component: () => <PensionsPage />,
+});
+
+const resultsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/results',
+  component: () => <ResultsPage />,
 });
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
+  monthlyInvestAmountInputRoute,
   simulationRoute,
   pensionsRoute,
+  resultsRoute,
 ]);
 
 const router = createRouter({
