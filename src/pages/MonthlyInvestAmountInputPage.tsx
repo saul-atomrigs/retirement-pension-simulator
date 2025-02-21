@@ -1,20 +1,12 @@
 import { useNavigate } from '@tanstack/react-router';
-import { useState } from 'react';
 import CTAButton from '../components/CTAButton';
 import TextInput from '../components/TextInput';
 import Txt from '../components/Txt';
+import useMonthlyInvest from '../features/monthly-invest/MonthlyInvest.hooks';
 
 export default function MonthlyInvestAmountInputPage() {
   const navigate = useNavigate();
-
-  const initialMonthlyAmount = sessionStorage.getItem('monthlyAmount') || '';
-  const [monthlyAmount, setMonthlyAmount] = useState(initialMonthlyAmount);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
-    setMonthlyAmount(inputValue);
-    sessionStorage.setItem('monthlyAmount', inputValue);
-  };
+  const { monthlyAmount, handleChangeMonthlyInvest } = useMonthlyInvest();
 
   const handleClickConfirm = () => {
     navigate({ to: '/pensions', search: { monthlyAmount } });
@@ -30,7 +22,7 @@ export default function MonthlyInvestAmountInputPage() {
         name='월금액'
         type='number'
         value={monthlyAmount}
-        onChange={handleChange}
+        onChange={handleChangeMonthlyInvest}
       />
 
       <CTAButton onClick={handleClickConfirm} disabled={!monthlyAmount}>

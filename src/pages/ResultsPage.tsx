@@ -4,12 +4,15 @@ import { colors } from '../design-tokens';
 import CTAButton from '../components/CTAButton';
 import useSimulationResults from '../features/results/Results.hooks';
 import { useNavigate } from '@tanstack/react-router';
+import useMonthlyInvest from '../features/monthly-invest/MonthlyInvest.hooks';
 
 export default function ResultsPage() {
   const navigate = useNavigate();
   const { simulationResult } = useSimulationResults();
+  const { clearMonthlyInvest } = useMonthlyInvest();
 
   const handleClickRestart = () => {
+    clearMonthlyInvest();
     navigate({ to: '/' });
   };
 
