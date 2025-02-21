@@ -12,7 +12,7 @@ export function useSimulation(monthlyAmount?: string) {
   };
 
   const handleSimulation = async () => {
-    if (!user || !selectedPensionId || !monthlyAmount) return;
+    if (!user || !selectedPensionId || !monthlyAmount) return null;
 
     setSimulating(true);
     try {
@@ -21,9 +21,10 @@ export function useSimulation(monthlyAmount?: string) {
         retirementAge: user.retirementAge,
         monthlyInvestment: parseInt(monthlyAmount, 10),
       });
-      console.log('Simulation Result:', result);
+      return result;
     } catch (error) {
       console.error('Simulation failed:', error);
+      return null;
     } finally {
       setSimulating(false);
     }

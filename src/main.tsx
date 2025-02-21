@@ -17,6 +17,7 @@ import PensionsPage from './pages/PensionsPage.tsx';
 import { initMockAPI } from './mocks/index.ts';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import MonthlyInvestAmountInputPage from './pages/MonthlyInvestAmountInputPage.tsx';
+import ResultsPage from './pages/ResultsPage.tsx';
 
 initMockAPI();
 
@@ -54,11 +55,18 @@ const pensionsRoute = createRoute({
   component: () => <PensionsPage />,
 });
 
+const resultsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/results',
+  component: () => <ResultsPage />,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   monthlyInvestAmountInputRoute,
   simulationRoute,
   pensionsRoute,
+  resultsRoute,
 ]);
 
 const router = createRouter({

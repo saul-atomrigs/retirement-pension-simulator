@@ -5,7 +5,7 @@ import usePensions from '../features/pensions/Pensions.hooks';
 import PensionsList from '../features/pensions/PensionsList';
 import { useUser } from '../features/user/user.hook';
 import { useSimulation } from '../features/simulation/Simulation.hooks';
-import { useSearch } from '@tanstack/react-router';
+import { useSearch, useNavigate } from '@tanstack/react-router';
 
 type SearchParams = {
   monthlyAmount: string;
@@ -21,10 +21,19 @@ export default function PensionsPage() {
     handleSelectPension,
     handleSimulation,
   } = useSimulation(monthlyAmount);
+  const navigate = useNavigate();
 
   if (userLoading) return <Loading message='사용자 데이터 불러오는중' />;
   if (pensionsLoading) return <Loading message='연금 상품 불러오는중' />;
   if (simulating) return <Loading message='연금 시뮬레이션 진행중' />;
+
+  const handleComplete = async () => {
+    const result = await handleSimulation();
+    if (result) {
+      sessionStorage.setItem('simulationResult', JSON.stringify(result));
+      navigate({ to: '/results' });
+    }
+  };
 
   return (
     <div className='container'>
@@ -38,7 +47,7 @@ export default function PensionsPage() {
         onSelect={handleSelectPension}
       />
 
-      <CTAButton onClick={handleSimulation} disabled={!selectedPensionId}>
+      <CTAButton onClick={handleComplete} disabled={!selectedPensionId}>
         선택 완료
       </CTAButton>
     </div>
