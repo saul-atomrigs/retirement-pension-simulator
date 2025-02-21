@@ -7,8 +7,12 @@ import { useUser } from '../features/user/user.hook';
 import { useSimulation } from '../features/simulation/Simulation.hooks';
 import { useSearch } from '@tanstack/react-router';
 
+type SearchParams = {
+  monthlyAmount: string;
+};
+
 export default function PensionsPage() {
-  const { monthlyAmount } = useSearch({ strict: false });
+  const { monthlyAmount } = useSearch({ strict: false }) as SearchParams;
   const { user, userLoading } = useUser();
   const { pensions, pensionsLoading } = usePensions();
   const {
