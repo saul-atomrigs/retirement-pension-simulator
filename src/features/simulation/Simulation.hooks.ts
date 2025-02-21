@@ -17,6 +17,7 @@ export function useSimulation(monthlyAmount?: string) {
     setSimulating(true);
     try {
       const result = await simulatePensionAPI({
+        pensionId: selectedPensionId,
         age: user.age,
         retirementAge: user.retirementAge,
         monthlyInvestment: parseInt(monthlyAmount, 10),
