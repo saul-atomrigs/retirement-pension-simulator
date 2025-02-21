@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { simulatePensionAPI } from '../../remotes';
 import { useUser } from '../user/user.hook';
 
-export function useSimulation() {
+export function useSimulation(monthlyAmount?: string) {
   const { user } = useUser();
   const [simulating, setSimulating] = useState(false);
   const [selectedPensionId, setSelectedPensionId] = useState('');
@@ -12,14 +12,14 @@ export function useSimulation() {
   };
 
   const handleSimulation = async () => {
-    if (!user || !selectedPensionId) return;
+    if (!user || !selectedPensionId || !monthlyAmount) return;
 
     setSimulating(true);
     try {
       const result = await simulatePensionAPI({
         age: user.age,
         retirementAge: user.retirementAge,
-        monthlyInvestment: 500000,
+        monthlyInvestment: parseInt(monthlyAmount, 10),
       });
       console.log('Simulation Result:', result);
     } catch (error) {

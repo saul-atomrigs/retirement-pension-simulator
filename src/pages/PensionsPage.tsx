@@ -20,7 +20,7 @@ export default function PensionsPage() {
     selectedPensionId,
     handleSelectPension,
     handleSimulation,
-  } = useSimulation();
+  } = useSimulation(monthlyAmount);
 
   if (userLoading) return <Loading message='사용자 데이터 불러오는중' />;
   if (pensionsLoading) return <Loading message='연금 상품 불러오는중' />;
