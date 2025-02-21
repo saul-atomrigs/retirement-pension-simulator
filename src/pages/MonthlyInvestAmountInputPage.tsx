@@ -23,6 +23,7 @@ export default function MonthlyInvestAmountInputPage() {
         type='number'
         value={monthlyAmount}
         onChange={handleChangeMonthlyInvest}
+        autoFocus
       />
 
       <CTAButton onClick={handleClickConfirm} disabled={!monthlyAmount}>
